@@ -1,6 +1,5 @@
 import os
 
-import supervision as sv
 import torch
 from super_gradients.training import Trainer, models
 from super_gradients.training.dataloaders.dataloaders import (
