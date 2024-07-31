@@ -1,3 +1,5 @@
+import os
+
 import supervision as sv
 import torch
 from super_gradients.training import Trainer, models
@@ -11,16 +13,16 @@ from super_gradients.training.models.detection_models.pp_yolo_e import (
     PPYoloEPostPredictionCallback,
 )
 
+ROOT_DIR = os.getcwd()
 MODEL_ARCH = "yolo_nas_m"
 BATCH_SIZE = 8
 MAX_EPOCHS = 160
-CHECKPOINT_DIR = "src/checkpoints"
+CHECKPOINT_DIR = f"{ROOT_DIR}/checkpoints"
 EXPERIMENT_NAME = "my_yolo_run_v2"
-LOCATION = "src/data"
 CLASSES = ["diagram-EKfo"]
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 TRAINER = Trainer(experiment_name=EXPERIMENT_NAME, ckpt_root_dir=CHECKPOINT_DIR)
-
+LOCATION = f"{ROOT_DIR}/data"
 
 CONFIDENCE_TRESHOLD = 0.35
 
@@ -49,7 +51,7 @@ train_params = {
     "ema": True,
     "ema_params": {"decay": 0.9, "decay_type": "threshold"},
     # ONLY TRAINING FOR 10 EPOCHS FOR THIS EXAMPLE NOTEBOOK
-    "max_epochs": 140,
+    "max_epochs": 300,
     "mixed_precision": False,
     "loss": PPYoloELoss(
         use_static_assigner=False,
@@ -95,7 +97,7 @@ model = models.get(
     MODEL_ARCH,
     num_classes=len(dataset_params["classes"]),
     pretrained_weights="coco",
-    checkpoint_path="src/checkpoints/my_yolo_run_v2/average_model.pth",
+    checkpoint_path=f"{ROOT_DIR}/{EXPERIMENT_NAME}/average_model.pth",
 ).to(DEVICE)
 
 TRAINER.train(
