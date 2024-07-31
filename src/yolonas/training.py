@@ -14,9 +14,9 @@ from super_gradients.training.models.detection_models.pp_yolo_e import (
 MODEL_ARCH = "yolo_nas_m"
 BATCH_SIZE = 8
 MAX_EPOCHS = 160
-CHECKPOINT_DIR = "/Users/i307132/Desktop/yolonas/src/checkpoints"
+CHECKPOINT_DIR = "src/checkpoints"
 EXPERIMENT_NAME = "my_yolo_run_v2"
-LOCATION = "/Users/i307132/Desktop/yolonas/src/data"
+LOCATION = "src/data"
 CLASSES = ["diagram-EKfo"]
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 TRAINER = Trainer(experiment_name=EXPERIMENT_NAME, ckpt_root_dir=CHECKPOINT_DIR)
@@ -95,7 +95,7 @@ model = models.get(
     MODEL_ARCH,
     num_classes=len(dataset_params["classes"]),
     pretrained_weights="coco",
-    checkpoint_path="/Users/i307132/Desktop/yolonas/src/checkpoints/my_yolo_run_v2/average_model.pth",
+    checkpoint_path="src/checkpoints/my_yolo_run_v2/average_model.pth",
 ).to(DEVICE)
 
 TRAINER.train(
